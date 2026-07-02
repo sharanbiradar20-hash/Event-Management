@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS public.events (
 
 -- 2. CREATE THE TICKETS TABLE (to track purchases)
 -- ============================================================
-CREATE TABLE IF NOT EXISTS public.tickets (
+DROP TABLE IF EXISTS public.tickets CASCADE;
+CREATE TABLE public.tickets (
   id              UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   event_id        UUID NOT NULL REFERENCES public.events(id) ON DELETE CASCADE,
   user_id         UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -41,12 +42,14 @@ ALTER TABLE public.tickets ENABLE ROW LEVEL SECURITY;
 -- ============================================================
 
 -- Policy: Anyone (including anonymous/unauthenticated) can READ all events
+DROP POLICY IF EXISTS "Anyone can view events" ON public.events;
 CREATE POLICY "Anyone can view events"
   ON public.events
   FOR SELECT
   USING (true);
 
 -- Policy: Authenticated users can INSERT their own events
+DROP POLICY IF EXISTS "Authenticated users can create events" ON public.events;
 CREATE POLICY "Authenticated users can create events"
   ON public.events
   FOR INSERT
@@ -54,6 +57,7 @@ CREATE POLICY "Authenticated users can create events"
   WITH CHECK (auth.uid() = organizer_id);
 
 -- Policy: Users can UPDATE only their own events
+DROP POLICY IF EXISTS "Users can update own events" ON public.events;
 CREATE POLICY "Users can update own events"
   ON public.events
   FOR UPDATE
@@ -62,6 +66,7 @@ CREATE POLICY "Users can update own events"
   WITH CHECK (auth.uid() = organizer_id);
 
 -- Policy: Users can DELETE only their own events
+DROP POLICY IF EXISTS "Users can delete own events" ON public.events;
 CREATE POLICY "Users can delete own events"
   ON public.events
   FOR DELETE
@@ -72,6 +77,7 @@ CREATE POLICY "Users can delete own events"
 -- ============================================================
 
 -- Policy: Users can view their own tickets
+DROP POLICY IF EXISTS "Users can view own tickets" ON public.tickets;
 CREATE POLICY "Users can view own tickets"
   ON public.tickets
   FOR SELECT
@@ -79,6 +85,7 @@ CREATE POLICY "Users can view own tickets"
   USING (auth.uid() = user_id);
 
 -- Policy: Event organizers can view tickets for their events
+DROP POLICY IF EXISTS "Organizers can view event tickets" ON public.tickets;
 CREATE POLICY "Organizers can view event tickets"
   ON public.tickets
   FOR SELECT
@@ -92,6 +99,7 @@ CREATE POLICY "Organizers can view event tickets"
   );
 
 -- Policy: Authenticated users can insert their own tickets (for free events / after payment)
+DROP POLICY IF EXISTS "Users can create own tickets" ON public.tickets;
 CREATE POLICY "Users can create own tickets"
   ON public.tickets
   FOR INSERT
