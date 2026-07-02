@@ -75,7 +75,6 @@ function LoginContent() {
           setTimeout(() => {
             const redirect = searchParams.get("redirect") || "/";
             router.push(redirect);
-            router.refresh();
           }, 1500);
         } else {
           setSuccessMsg(
@@ -94,7 +93,6 @@ function LoginContent() {
         setTimeout(() => {
           const redirect = searchParams.get("redirect") || "/";
           router.push(redirect);
-          router.refresh();
         }, 1000);
       }
     } catch (err: unknown) {
