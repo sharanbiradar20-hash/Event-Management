@@ -5,6 +5,9 @@
 [![Stripe](https://img.shields.io/badge/Stripe-Payments-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://stripe.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-orange?style=for-the-badge&logo=vercel&logoColor=white)](https://event-management-one-eta.vercel.app/)
+
+🔗 **Live Demo:** [event-management-one-eta.vercel.app](https://event-management-one-eta.vercel.app)
 
 A premium, dark-mode event discovery and ticketing platform. Aura-Events provides a fast, modern interface built on Next.js 16 (App Router), leveraging Supabase for database & session persistence, and Stripe for processing ticket sales.
 
